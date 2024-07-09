@@ -9,7 +9,7 @@ const Booking = sequelize.define('Booking', {
     allowNull: false,
   },
 }, {
-  timestamps: true,
+  timestamps: false,
 });
 
 Booking.belongsTo(Room, { foreignKey: 'roomId' });

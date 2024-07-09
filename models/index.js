@@ -1,19 +1,35 @@
-const sequelize = require('../config/database');
-const Room = require('./room');
-const Person = require('./person');
-const Booking = require('./booking');
+const { Sequelize, DataTypes } = require('sequelize');
 
-// Внешние ключи и связи
-Room.hasMany(Booking, { foreignKey: 'roomId' });
-Person.hasMany(Booking, { foreignKey: 'personId' });
+const sequelize = new Sequelize('classes_db', 'postgres', 'kenzo4tenma', {
+  host: 'localhost',
+  dialect: 'postgres',
+});
 
-Booking.belongsTo(Room, { foreignKey: 'roomId' });
-Booking.belongsTo(Person, { foreignKey: 'personId' });
+// Определение моделей
+const Room = sequelize.define('Room', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      name: { type: DataTypes.STRING, allowNull: false },
+}, {timestamps: false,});
 
-// Экспорт модулей
-module.exports = {
-  sequelize,
-  Room,
-  Person,
-  Booking,
-};
+const Person = sequelize.define('Person', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, },
+    name: { type: DataTypes.STRING, allowNull: false },
+}, {timestamps: false,});
+
+const Booking = sequelize.define('Booking', {
+    personId: { type: DataTypes.INTEGER, allowNull: false },
+    roomId: { type: DataTypes.INTEGER, allowNull: false },
+    date: { type: DataTypes.DATE, allowNull: false },
+}, {timestamps: false,});
+
+// Связи между моделями
+Room.hasMany(Booking);
+Booking.belongsTo(Room);
+Person.hasMany(Booking);
+Booking.belongsTo(Person);
+
+module.exports = { sequelize, Room, Person, Booking };
