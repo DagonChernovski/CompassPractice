@@ -47,7 +47,7 @@ router.post('/api/v1/person/:personId/room/:roomId/date/:date', async (req, res)
     });
 
     if (existingBooking) {
-      return res.status(400).json({ message: 'Room is already booked on this date.' });
+      return res.status(400).json({ message: 'Комната уже зарегистрирована на эту дату' });
     }
 
     const booking = await Booking.create({ RoomId: roomId, PersonId: personId, date });
@@ -68,11 +68,11 @@ router.post('/api/v1/room/:roomId/date/:date', async (req, res) => {
     });
 
     if (!booking) {
-      return res.status(404).json({ message: 'No booking found for this date.' });
+      return res.status(404).json({ message: 'На эту дату нет регистраций.' });
     }
 
     await booking.destroy();
-    res.json({ message: 'Booking deleted successfully.' });
+    res.json({ message: 'Регистрация удалена.' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
