@@ -19,14 +19,12 @@
       try {
         console.log("well ok");
         const response = await fetch('http://localhost:3000/api/v1/room');
-        console.log(response);
         const data = await response.json();
-        console.log(data);
         const table = document.createElement('table');
         const thead = document.createElement('thead');
         const tbody = document.createElement('tbody');
 
-        const headers = ['ID', 'Name'];
+        const headers = ['№', 'Название'];
         const headerRow = document.createElement('tr');
 
         headers.forEach(headerText => {
@@ -52,7 +50,50 @@
 
         table.appendChild(tbody);
         const roomsDiv = document.getElementById('rooms');
-        roomsDiv.innerHTML = ''; // Очистить предыдущий контент
+        roomsDiv.innerHTML = '';
+        roomsDiv.appendChild(table);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
+    }
+    async function getPeople() {
+    try {
+        console.log("well ok");
+        const response = await fetch('http://localhost:3000/api/v1/person');
+        console.log(response);
+        const data = await response.json();
+        console.log(data);
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+
+        const headers = ['№', 'ФИО'];
+        const headerRow = document.createElement('tr');
+
+        headers.forEach(headerText => {
+          const th = document.createElement('th');
+          th.textContent = headerText;
+          headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        data.forEach(item => {
+          const row = document.createElement('tr');
+
+          Object.values(item).forEach(cellText => {
+            const cell = document.createElement('td');
+            cell.textContent = cellText;
+            row.appendChild(cell);
+          });
+
+          tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        const roomsDiv = document.getElementById('rooms');
+        roomsDiv.innerHTML = '';
         roomsDiv.appendChild(table);
       } catch (error) {
         console.error('Error fetching rooms:', error);
