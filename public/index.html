@@ -3,30 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Веб-сервер организации расписания</title>
+  <title>Веб-портал организации расписания</title>
+<link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
   <h1>Выберите команду</h1>
   <div>
     <h2>Получение данных</h2>
     <button onclick="getRooms()">Список классов</button>
     <button onclick="getPeople()">Список преподавателей</button>
-    <div id="rooms"></div>
+    <div id="content"></div>
+  </div>
+
+  <div>
+    <h2>Забронировать класс</h2>
+    <form id="bookingForm" onsubmit="bookRoom(event)">
+      <label for="personId">ID преподавателя:</label>
+      <input type="text" id="personId" name="personId" required>
+      <label for="roomId">ID класса:</label>
+      <input type="text" id="roomId" name="roomId" required>
+      <label for="date">Дата (YYYY-MM-DD):</label>
+      <input type="text" id="date" name="date" required>
+      <button type="submit">Забронировать</button>
+    </form>
+  </div>
+
+  <div>
+    <h2>Удалить бронь</h2>
+    <form id="unbookingForm" onsubmit="unbookRoom(event)">
+      <label for="unRoomId">Номер класса:</label>
+      <input type="text" id="unRoomId" name="unRoomId" required>
+      <label for="unDate">Дата (YYYY-MM-DD):</label>
+      <input type="text" id="unDate" name="unDate" required>
+      <button type="submit">Удалить бронь</button>
+    </form>
   </div>
 
   <script>
-    async function getRooms() {
-      try {
-        console.log("well ok");
-        const response = await fetch('http://localhost:3000/api/v1/room');
-        const data = await response.json();
+    function drawTable(headers, data) {
         const table = document.createElement('table');
         const thead = document.createElement('thead');
         const tbody = document.createElement('tbody');
 
-        const headers = ['№', 'Название'];
         const headerRow = document.createElement('tr');
-
         headers.forEach(headerText => {
           const th = document.createElement('th');
           th.textContent = headerText;
@@ -38,65 +58,76 @@
 
         data.forEach(item => {
           const row = document.createElement('tr');
-
           Object.values(item).forEach(cellText => {
             const cell = document.createElement('td');
             cell.textContent = cellText;
             row.appendChild(cell);
           });
-
           tbody.appendChild(row);
         });
 
         table.appendChild(tbody);
-        const roomsDiv = document.getElementById('rooms');
-        roomsDiv.innerHTML = '';
-        roomsDiv.appendChild(table);
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = '';
+        contentDiv.appendChild(table);
+    }
+
+    async function getRooms() {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/room');
+        const data = await response.json();
+        const headers = ['№', 'Название'];
+        drawTable(headers, data);
       } catch (error) {
         console.error('Error fetching rooms:', error);
       }
     }
+
     async function getPeople() {
-    try {
-        console.log("well ok");
+      try {
         const response = await fetch('http://localhost:3000/api/v1/person');
-        console.log(response);
         const data = await response.json();
-        console.log(data);
-        const table = document.createElement('table');
-        const thead = document.createElement('thead');
-        const tbody = document.createElement('tbody');
-
         const headers = ['№', 'ФИО'];
-        const headerRow = document.createElement('tr');
-
-        headers.forEach(headerText => {
-          const th = document.createElement('th');
-          th.textContent = headerText;
-          headerRow.appendChild(th);
-        });
-
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-
-        data.forEach(item => {
-          const row = document.createElement('tr');
-
-          Object.values(item).forEach(cellText => {
-            const cell = document.createElement('td');
-            cell.textContent = cellText;
-            row.appendChild(cell);
-          });
-
-          tbody.appendChild(row);
-        });
-
-        table.appendChild(tbody);
-        const roomsDiv = document.getElementById('rooms');
-        roomsDiv.innerHTML = '';
-        roomsDiv.appendChild(table);
+        drawTable(headers, data);
       } catch (error) {
-        console.error('Error fetching rooms:', error);
+        console.error('Error fetching people:', error);
+      }
+    }
+
+    async function bookRoom(event) {
+      event.preventDefault();
+
+      const personId = document.getElementById('personId').value;
+      const roomId = document.getElementById('roomId').value;
+      const date = document.getElementById('date').value;
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/v1/person/${personId}/room/${roomId}/date/${date}`, {
+          method: 'POST',
+        });
+
+        const result = await response.json();
+        alert(result.message || 'Ошибка бронирования');
+      } catch (error) {
+        console.error('Error booking room:', error);
+      }
+    }
+
+    async function unbookRoom(event) {
+      event.preventDefault();
+
+      const roomId = document.getElementById('unRoomId').value;
+      const date = document.getElementById('unDate').value;
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/v1/room/${roomId}/date/${date}`, {
+          method: 'POST',
+        });
+
+        const result = await response.json();
+        alert(result.message || 'Ошибка удаления брони');
+      } catch (error) {
+        console.error('Error unbooking room:', error);
       }
     }
   </script>
