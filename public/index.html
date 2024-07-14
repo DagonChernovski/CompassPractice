@@ -13,16 +13,24 @@
     <h2>Получение данных</h2>
     <button onclick="getRooms()">Список классов</button>
     <button onclick="getPeople()">Список преподавателей</button>
+    <h3><div id="tablabel"></div></h3>
     <div id="content"></div>
   </div>
-
+  <div>
+    <h2>Просмотр брони</h2>
+    <form id="viewForm" onsubmit="getBooking(event)">
+      <label for="personId">ID класса:</label>
+      <select id="getId" name="getId" required></select>&nbsp;
+      <button class="button-8" type="submit">Получить</button>
+      </form>
+  </div>
   <div>
     <h2>Забронировать класс</h2>
     <form id="bookingForm" onsubmit="bookRoom(event)">
-      <label for="personId">ID преподавателя:</label>
-      <input type="text" id="personId" name="personId" required>
-      <label for="roomId">ID класса:</label>
-      <input type="text" id="roomId" name="roomId" required>
+      <label for="personId">ФИО преподавателя:</label>
+      <select id="personId" name="personId" required></select>&nbsp;
+      <label for="roomId">Класс:</label>
+      <select id="roomId" name="roomId" required></select>&nbsp;
       <label for="date">Дата (YYYY-MM-DD):</label>
       <input type="text" id="date" name="date" required>
       <button type="submit">Забронировать</button>
@@ -33,7 +41,7 @@
     <h2>Удалить бронь</h2>
     <form id="unbookingForm" onsubmit="unbookRoom(event)">
       <label for="unRoomId">Номер класса:</label>
-      <input type="text" id="unRoomId" name="unRoomId" required>
+      <select id="unRoomId" name="unRoomId" required></select>
       <label for="unDate">Дата (YYYY-MM-DD):</label>
       <input type="text" id="unDate" name="unDate" required>
       <button type="submit">Удалить бронь</button>

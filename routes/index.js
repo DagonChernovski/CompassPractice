@@ -11,7 +11,6 @@ router.get('/api/v1/room', async (req, res) => {
     res.json(rooms);
   } catch (err) {
     res.status(500).json({ error: err.message });
-
   }
 });
 
@@ -20,9 +19,9 @@ router.get('/api/v1/room/:roomId', async (req, res) => {
     const roomId = req.params.roomId;
     const bookings = await Booking.findAll({
       where: { RoomId: roomId },
-      attributes: ['date'],
+      attributes: ['date', 'PersonId'],
     });
-    res.json(bookings.map(booking => booking.date));
+    res.json(bookings);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -52,10 +51,10 @@ router.post('/api/v1/person/:personId/room/:roomId/date/:date', async (req, res)
     }
 
     const booking = await Booking.create({ RoomId: roomId, PersonId: personId, date });
-    console.log('Booking created successfully:', booking);
+    //console.log('Booking created successfully:', booking);
     res.json({ message: 'Комната успешно зарегистрирована.', booking });
   } catch (err) {
-    console.error('Error creating booking:', err);
+    //console.error('Error creating booking:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -63,7 +62,7 @@ router.post('/api/v1/person/:personId/room/:roomId/date/:date', async (req, res)
 router.post('/api/v1/room/:roomId/date/:date', async (req, res) => {
   try {
     const { roomId, date } = req.params;
-    const booking = await Booking.findOne({
+    const booking = await Booking.findOne({ 
       where: {
         RoomId: roomId,
         date,
