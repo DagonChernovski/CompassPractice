@@ -1,12 +1,16 @@
 const express = require('express');
+const flatpickr = require("flatpickr");
+const Russian = require("flatpickr/dist/l10n/ru.js").default.ru;
 const { Room, Person, Booking } = require('../models');
+flatpickr.localize(flatpickr.l10ns.ru);
 
 const router = express.Router();
 
 router.get('/api/v1/room', async (req, res) => {
   try {
     const rooms = await Room.findAll({
-        attributes: ['id', 'name'] 
+        attributes: ['id', 'name'],
+        order: [['id','ASC']]
     });
     res.json(rooms);
   } catch (err) {
@@ -20,6 +24,7 @@ router.get('/api/v1/room/:roomId', async (req, res) => {
     const bookings = await Booking.findAll({
       where: { RoomId: roomId },
       attributes: ['date', 'PersonId'],
+      order: [['date','ASC']]
     });
     res.json(bookings);
   } catch (err) {

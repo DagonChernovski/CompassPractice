@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Веб-портал организации расписания</title>
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+
+
 </head>
 
 <body>
@@ -14,7 +19,7 @@
     <button onclick="getRooms()">Список классов</button>
     <button onclick="getPeople()">Список преподавателей</button>
     <h3><div id="tablabel"></div></h3>
-    <div id="content"></div>
+    <div id="content" class="big"></div>
   </div>
   <div>
     <h2>Просмотр брони</h2>
@@ -30,9 +35,9 @@
       <label for="personId">ФИО преподавателя:</label>
       <select id="personId" name="personId" required></select>&nbsp;
       <label for="roomId">Класс:</label>
-      <select id="roomId" name="roomId" required></select>&nbsp;
-      <label for="date">Дата (YYYY-MM-DD):</label>
-      <input type="text" id="date" name="date" required>
+      <select id="roomId" name="roomId" required onchange="updateDatepicker()"></select>&nbsp;
+      <label for="date">Дата:</label>
+      <input class="box" type="text" id="date" name="date" required>
       <button type="submit">Забронировать</button>
     </form>
   </div>
@@ -41,9 +46,9 @@
     <h2>Удалить бронь</h2>
     <form id="unbookingForm" onsubmit="unbookRoom(event)">
       <label for="unRoomId">Номер класса:</label>
-      <select id="unRoomId" name="unRoomId" required></select>
-      <label for="unDate">Дата (YYYY-MM-DD):</label>
-      <input type="text" id="unDate" name="unDate" required>
+      <select id="unRoomId" name="unRoomId" required onchange="updateDatepicker()"></select>
+      <label for="unDate">Дата:</label>
+      <input class="box" type="text" id="unDate" name="unDate" required>
       <button type="submit">Удалить бронь</button>
     </form>
   </div>
