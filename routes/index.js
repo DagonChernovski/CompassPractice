@@ -11,6 +11,7 @@ router.get('/api/v1/room', async (req, res) => {
     res.json(rooms);
   } catch (err) {
     res.status(500).json({ error: err.message });
+
   }
 });
 
@@ -51,8 +52,10 @@ router.post('/api/v1/person/:personId/room/:roomId/date/:date', async (req, res)
     }
 
     const booking = await Booking.create({ RoomId: roomId, PersonId: personId, date });
-    res.json({ message: 'Room booked successfully.', booking });
+    console.log('Booking created successfully:', booking);
+    res.json({ message: 'Комната успешно зарегистрирована.', booking });
   } catch (err) {
+    console.error('Error creating booking:', err);
     res.status(500).json({ error: err.message });
   }
 });

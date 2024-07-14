@@ -21,9 +21,7 @@ const Person = sequelize.define('Person', {
 }, {timestamps: false,});
 
 const Booking = sequelize.define('Booking', {
-    personId: { type: DataTypes.INTEGER, allowNull: false },
-    roomId: { type: DataTypes.INTEGER, allowNull: false },
-    date: { type: DataTypes.DATE, allowNull: false },
+    date: { type: DataTypes.DATEONLY, allowNull: false },
 }, {timestamps: false,});
 
 // Связи между моделями

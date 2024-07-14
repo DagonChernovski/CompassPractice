@@ -14,7 +14,7 @@ app.use(routes);
 
 const startServer = async () => {
   try {
-    await sequelize.sync({ force: true }); 
+    await sequelize.sync({ force: true }); // Или { force: false } если не хотите терять данные
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
