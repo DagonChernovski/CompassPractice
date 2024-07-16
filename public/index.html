@@ -1,58 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Веб-портал организации расписания</title>
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб-портал организации расписания</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+  </head>
 
+  <body>
+    <h1>Выберите команду</h1>
+    <div class="row">
+      <div class="column">
+        <div>
+          <h2>Получение данных</h2>
+          <button onclick="getRooms()">Список классов</button>
+          <button onclick="getPeople()">Список преподавателей</button>
+        </div>
+        <div>
+          <h2>Просмотр брони</h2>
+          <form id="viewForm" onsubmit="getBooking(event)">
+            <label for="personId">ID класса:</label>
+            <select id="getId" name="getId" required></select>&nbsp;
+            <button class="button-8" type="submit">Получить</button>
+          </form>
+        </div>
+        <div>
+          <h2>Забронировать класс</h2>
+          <form id="bookingForm" onsubmit="bookRoom(event)">
+            <label for="personId">ФИО преподавателя:</label>
+            <select id="personId" name="personId" required></select><br><br>
+            <label for="roomId">Класс:</label>
+            <select id="roomId" name="roomId" required
+              onchange="updateDatepicker()"></select><br><br>
+            <label for="date">Дата:</label>
+            <input class="box" type="text" id="date" name="date" required><br><br>
+            <button type="submit">Забронировать</button>
+          </form>
+        </div>
 
-</head>
-
-<body>
-  <h1>Выберите команду</h1>
-  <div>
-    <h2>Получение данных</h2>
-    <button onclick="getRooms()">Список классов</button>
-    <button onclick="getPeople()">Список преподавателей</button>
-    <h3><div id="tablabel"></div></h3>
-    <div id="content" class="big"></div>
-  </div>
-  <div>
-    <h2>Просмотр брони</h2>
-    <form id="viewForm" onsubmit="getBooking(event)">
-      <label for="personId">ID класса:</label>
-      <select id="getId" name="getId" required></select>&nbsp;
-      <button class="button-8" type="submit">Получить</button>
-      </form>
-  </div>
-  <div>
-    <h2>Забронировать класс</h2>
-    <form id="bookingForm" onsubmit="bookRoom(event)">
-      <label for="personId">ФИО преподавателя:</label>
-      <select id="personId" name="personId" required></select>&nbsp;
-      <label for="roomId">Класс:</label>
-      <select id="roomId" name="roomId" required onchange="updateDatepicker()"></select>&nbsp;
-      <label for="date">Дата:</label>
-      <input class="box" type="text" id="date" name="date" required>
-      <button type="submit">Забронировать</button>
-    </form>
-  </div>
-
-  <div>
-    <h2>Удалить бронь</h2>
-    <form id="unbookingForm" onsubmit="unbookRoom(event)">
-      <label for="unRoomId">Номер класса:</label>
-      <select id="unRoomId" name="unRoomId" required onchange="updateDatepicker()"></select>
-      <label for="unDate">Дата:</label>
-      <input class="box" type="text" id="unDate" name="unDate" required>
-      <button type="submit">Удалить бронь</button>
-    </form>
-  </div>
-
-  <script src="scripts/script.js"></script>
-</body>
+        <div>
+          <h2>Удалить бронь</h2>
+          <form id="unbookingForm" onsubmit="unbookRoom(event)">
+            <label for="unRoomId">Номер класса:</label>
+            <select id="unRoomId" name="unRoomId" required
+              onchange="updateDatepicker()"></select><br><br>
+            <label for="unDate">Дата:</label>
+            <input class="box" type="text" id="unDate" name="unDate" required>
+            <button type="submit">Удалить бронь</button>
+          </form>
+        </div>
+      </div>
+      <div class="column" style="text-align: left">
+        <h3><div id="tablabel"></div></h3>
+        <div id="content" class="big"></div>
+        
+      </div>
+    </div>
+    <script src="scripts/script.js"></script>
+  </body>
 </html>

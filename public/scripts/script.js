@@ -144,7 +144,11 @@ async function getBooking(event) {
         console.log(data);
         const headers = ['Дата', 'Преподаватель'];
         document.getElementById('tablabel').innerHTML = 'Список бронирований комнаты '+roomId;
-        drawTable(headers, data);
+        const tableData = data.map(booking => ({
+            date: booking.date,
+            teacher: booking.Person.name
+          }));
+        drawTable(headers, tableData);
     } catch (error) {
         console.error('Error fetching people:', error);
     }
@@ -163,6 +167,7 @@ async function bookRoom(event) {
         });
         updateDatepicker();
         const result = await response.json();
+        getBooking(event);
         alert(result.message || 'Ошибка бронирования');
     } catch (error) {
         console.error('Error booking room:', error);
@@ -181,6 +186,7 @@ async function unbookRoom(event) {
         });
         updateDatepicker();
         const result = await response.json();
+        getBooking(event);
         alert(result.message || 'Ошибка удаления брони');
     } catch (error) {
         console.error('Error unbooking room:', error);

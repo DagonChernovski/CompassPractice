@@ -1,14 +1,66 @@
 body {
   background-color: skyblue;
-  background-image: url("gradient.jpg");
+  background-image: url("white-office.jpg");
+  background-size: cover;
+  margin-left: 20px;
+  text-align: center;
 }
 
 h1 {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: center;
-  font-size: 45px;
+  font-size: 40px;
 }
 
+table {
+  border-collapse: collapse;
+  margin: 5px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+thead tr {
+  background-color: #987900;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+#tablabel {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
 h2 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 30px;
@@ -26,11 +78,10 @@ label {
 .big {
   font-size: 20px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #009879;
   color: white;
   padding: 10px 20px;
   border: none;

@@ -1,13 +1,11 @@
 {
   "dependencies": {
-    "air-datepicker": "^3.5.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "flatpickr": "^4.6.13",
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "sequelize": "^6.37.3"
   },
   "name": "compassplus",
   "version": "1.0.0",

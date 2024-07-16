@@ -23,8 +23,12 @@ router.get('/api/v1/room/:roomId', async (req, res) => {
     const roomId = req.params.roomId;
     const bookings = await Booking.findAll({
       where: { RoomId: roomId },
-      attributes: ['date', 'PersonId'],
-      order: [['date','ASC']]
+      attributes: ['date'],
+      include: [{
+        model: Person,
+        attributes: ['name']
+      }],
+      order: [['date', 'ASC']]
     });
     res.json(bookings);
   } catch (err) {
