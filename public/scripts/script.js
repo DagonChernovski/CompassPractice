@@ -135,9 +135,9 @@ async function getPeople() {
     }
 }
 
-async function getBooking(event) {
+async function getBooking(event,elemId) {
     event.preventDefault();
-    const roomId = document.getElementById('getId').value;
+    const roomId = document.getElementById(elemId).value;
     try {
         const response = await fetch(`http://localhost:3000/api/v1/room/${roomId}`);
         const data = await response.json();
@@ -167,7 +167,7 @@ async function bookRoom(event) {
         });
         updateDatepicker();
         const result = await response.json();
-        getBooking(event);
+        getBooking(event,'roomId');
         alert(result.message || 'Ошибка бронирования');
     } catch (error) {
         console.error('Error booking room:', error);
@@ -186,7 +186,7 @@ async function unbookRoom(event) {
         });
         updateDatepicker();
         const result = await response.json();
-        getBooking(event);
+        getBooking(event,'unRoomId');
         alert(result.message || 'Ошибка удаления брони');
     } catch (error) {
         console.error('Error unbooking room:', error);
